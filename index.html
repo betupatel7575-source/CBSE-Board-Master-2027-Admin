@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CBSE Board Master 2027 — Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= LOGIN SCREEN ================= -->
+<div id="loginScreen" class="screen">
+  <div class="login-card">
+    <h1>CBSE Board Master 2027</h1>
+    <p class="subtitle">Admin Panel Login</p>
+    <input type="email" id="loginEmail" placeholder="Admin Email" autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="btn btn-primary" id="loginBtn">Login</button>
+    <p id="loginError" class="error-text"></p>
+  </div>
+</div>
+
+<!-- ================= MAIN APP SHELL ================= -->
+<div id="appShell" class="screen hidden">
+
+  <header class="topbar">
+    <button id="menuToggle" class="icon-btn">☰</button>
+    <span class="topbar-title">CBSE Board Master 2027</span>
+    <button id="logoutBtn" class="icon-btn" title="Logout">⏻</button>
+  </header>
+
+  <nav id="sideNav" class="side-nav">
+    <a href="#" data-view="dashboard" class="nav-item active">📊 Dashboard</a>
+    <a href="#" data-view="questions" class="nav-item">📝 Questions</a>
+    <a href="#" data-view="subjects" class="nav-item">📚 Subjects</a>
+    <a href="#" data-view="chapters" class="nav-item">📖 Chapters</a>
+    <a href="#" data-view="samplePapers" class="nav-item">📄 Sample Papers</a>
+    <a href="#" data-view="mockTests" class="nav-item">🧪 Mock Tests</a>
+    <a href="#" data-view="updates" class="nav-item">📢 Updates</a>
+    <a href="#" data-view="settings" class="nav-item">⚙️ Settings</a>
+  </nav>
+
+  <main class="content">
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active">
+      <h2>Dashboard</h2>
+      <div class="stat-grid" id="statGrid">
+        <div class="stat-card"><div class="stat-num" id="statTotalQ">–</div><div class="stat-label">Total Questions</div></div>
+        <div class="stat-card"><div class="stat-num" id="statClass10">–</div><div class="stat-label">Class 10 Questions</div></div>
+        <div class="stat-card"><div class="stat-num" id="statClass12">–</div><div class="stat-label">Class 12 Questions</div></div>
+        <div class="stat-card"><div class="stat-num" id="statRepeated">–</div><div class="stat-label">Repeated Questions</div></div>
+        <div class="stat-card"><div class="stat-num" id="statSubjects">–</div><div class="stat-label">Total Subjects</div></div>
+        <div class="stat-card"><div class="stat-num" id="statChapters">–</div><div class="stat-label">Total Chapters</div></div>
+        <div class="stat-card"><div class="stat-num" id="statPapers">–</div><div class="stat-label">Sample Papers</div></div>
+        <div class="stat-card"><div class="stat-num" id="statMockTests">–</div><div class="stat-label">Mock Tests</div></div>
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section id="view-questions" class="view">
+      <div class="view-header">
+        <h2>Questions</h2>
+        <button class="btn btn-primary" id="addQuestionBtn">+ Add Question</button>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="qSearch" placeholder="Search question / answer / keyword...">
+        <select id="fClass"><option value="">All Classes</option><option value="10">Class 10</option><option value="12">Class 12</option></select>
+        <select id="fSubject"><option value="">All Subjects</option></select>
+        <select id="fChapter"><option value="">All Chapters</option></select>
+        <select id="fYear"><option value="">All Years</option></select>
+        <select id="fMarks"><option value="">All Marks</option></select>
+        <select id="fType"><option value="">All Types</option>
+          <option>MCQ</option><option>Very Short Answer</option><option>Short Answer</option>
+          <option>Long Answer</option><option>Case-Based</option><option>Assertion-Reason</option>
+          <option>Numerical</option><option>Diagram-based</option>
+        </select>
+        <select id="fRepeated"><option value="">Repeated: Any</option><option value="true">Repeated: Yes</option><option value="false">Repeated: No</option></select>
+        <button class="btn btn-secondary" id="clearFiltersBtn">Clear</button>
+      </div>
+
+      <div class="table-toolbar">
+        <button class="btn btn-secondary" id="exportCsvBtn">Export CSV</button>
+        <label class="btn btn-secondary file-label">Import CSV<input type="file" id="importCsvInput" accept=".csv" hidden></label>
+      </div>
+
+      <div id="questionsList" class="card-list">
+        <p class="empty-state">Loading questions...</p>
+      </div>
+    </section>
+
+    <!-- SUBJECTS -->
+    <section id="view-subjects" class="view">
+      <div class="view-header">
+        <h2>Subjects</h2>
+        <button class="btn btn-primary" id="addSubjectBtn">+ Add Subject</button>
+      </div>
+      <div id="subjectsList" class="card-list"><p class="empty-state">Loading subjects...</p></div>
+    </section>
+
+    <!-- CHAPTERS -->
+    <section id="view-chapters" class="view">
+      <div class="view-header">
+        <h2>Chapters</h2>
+        <button class="btn btn-primary" id="addChapterBtn">+ Add Chapter</button>
+      </div>
+      <div id="chaptersList" class="card-list"><p class="empty-state">Loading chapters...</p></div>
+    </section>
+
+    <!-- SAMPLE PAPERS -->
+    <section id="view-samplePapers" class="view">
+      <div class="view-header">
+        <h2>Sample Papers</h2>
+        <button class="btn btn-primary" id="addPaperBtn">+ Add Sample Paper</button>
+      </div>
+      <div id="papersList" class="card-list"><p class="empty-state">Loading sample papers...</p></div>
+    </section>
+
+    <!-- MOCK TESTS -->
+    <section id="view-mockTests" class="view">
+      <div class="view-header">
+        <h2>Mock Tests</h2>
+        <button class="btn btn-primary" id="addMockTestBtn">+ Add Mock Test</button>
+      </div>
+      <div id="mockTestsList" class="card-list"><p class="empty-state">Loading mock tests...</p></div>
+    </section>
+
+    <!-- MOCK TEST — QUESTION MANAGEMENT (drill-down from Mock Tests) -->
+    <section id="view-mockTestDetail" class="view">
+      <div class="view-header">
+        <button class="btn btn-secondary" id="backToMockTestsBtn">← Back to Mock Tests</button>
+      </div>
+      <h2 id="mtDetailTitle">Mock Test Questions</h2>
+      <p id="mtDetailMeta" class="item-card-meta"></p>
+      <div class="view-header">
+        <span></span>
+        <button class="btn btn-primary" id="addMockQuestionBtn">+ Add Question</button>
+      </div>
+      <div id="mockQuestionsList" class="card-list">
+        <p class="empty-state">Loading questions...</p>
+      </div>
+    </section>
+
+    <!-- UPDATES -->
+    <section id="view-updates" class="view">
+      <div class="view-header">
+        <h2>Latest Updates</h2>
+        <button class="btn btn-primary" id="addUpdateBtn">+ Post Update</button>
+      </div>
+      <div id="updatesList" class="card-list"><p class="empty-state">Loading updates...</p></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-settings" class="view">
+      <h2>Settings</h2>
+      <div class="settings-card">
+        <p><strong>Logged in as:</strong> <span id="settingsEmail">–</span></p>
+        <p><strong>Firebase Project:</strong> cbse-board-master-2027-ce8b3</p>
+        <p><strong>Region:</strong> asia-south2 (Delhi)</p>
+        <button class="btn btn-danger" id="settingsLogoutBtn">Logout</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================= GENERIC MODAL ================= -->
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Title</h3>
+      <button class="icon-btn" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="modalSaveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Firebase SDK (compat build, easiest for plain JS) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script src="app.js"></script>
+</body>
+</html>
